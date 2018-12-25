@@ -109,13 +109,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-STATIC_TMP = os.path.join(BASE_DIR, '/var/www/static/')
 MEDIA_URL = '/media/'
 
-os.makedirs(STATIC_TMP, exist_ok=True)
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),    
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
 )
 
 LOGIN_REDIRECT_URL = '/'
