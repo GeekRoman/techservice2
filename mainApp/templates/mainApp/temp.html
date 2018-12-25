@@ -1,0 +1,39 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+    
+    {% if ready %}
+        <h3 class="order-ready">{{ ready }}</h3>
+    {% endif %}
+
+    <div class="text-container-center">
+        <h3 class="area-text-primary">Оформление заказа</h3>
+        <form action="" method="post">
+    
+            {% csrf_token %}
+    
+            {{ formset.management_form }}
+            <div id="form_set">
+                {% for one_form in formset %}
+                    <table class='no_error'>
+                        {{ one_form.as_table }}
+                    </table>
+                {% endfor %}
+            </div>
+            <input class="register-button" type="button" value="Добавить услугу" id="add_more">
+            <div id="empty_form" style="display:none">
+                <table class='no_error'>
+                    {{ formset.empty_form.as_table }}
+                </table>
+            </div>
+            <script>
+                $('#add_more').click(function () {
+                    var form_idx = $('#id_form-TOTAL_FORMS').val();
+                    $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+                    $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+                });
+            </script>
+            <input id="register-button" type="submit" value="Оформить заказ"/>
+    
+        </form>
+    {% endblock %}</div>

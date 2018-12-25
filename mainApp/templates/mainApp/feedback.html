@@ -1,0 +1,12 @@
+{% extends "mainApp/wrapper.html" %} {% block content %} {% load static %}
+<div class="order">
+    <p class="area-text-primary">Наши отзывы</p>
+    {% for order in orders %}
+        <hr>
+        <h4>Заказ: </h4>
+        <h4>Оценка: {{ order.rating }}</h4>
+        <h4>Автор: {{ order.client.username }}</h4>
+        <h4>Отзыв: {{ order.feedback }}</h4>
+    {% endfor %}
+</div>
+{% endblock %}

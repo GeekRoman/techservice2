@@ -1,0 +1,29 @@
+{% extends "mainApp/wrapper.html" %} {% load static %} {% block content %} {% if form.errors %}
+<p class="alert-message">Логин или пароль введен неверно!</p>
+{% endif %} {% if next %} {% if user.is_authenticated %}
+<div class="spacer"></div>
+<div class="alert-message">Your account doesn't have access to this page. To proceed, please login with an account that has access.</div>
+{% else %}
+<div class="alert-message">Вам необходимо авторизоваться для просмотра этой страницы!</div>
+{% endif %} {% endif %}
+<div class="login-register-container">
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="login-password-field">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="login-password-field">
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </div>        
+        <div class="lock"><img src="{% static 'images/lock.png' %}"></div>
+        <div class="login-button-container">
+            <input class="login-buton" type="submit" value="Войти" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+    </form>
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <div class="lost-password-container"><a class="lost-password" href="{% url 'password_reset' %}">Забыли пароль?</a></div>
+</div>
+{% endblock %}

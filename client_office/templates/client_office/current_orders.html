@@ -1,0 +1,12 @@
+{% extends "client_office/client_wrapper.html" %}
+
+{% block client_content %}
+    <h4 class="area-text-primary">{{ title }}</h4>
+    <div class="orders">
+        {% for order in orders %}
+            <hr class="hr-small">
+            <a class="area-text-primary" href="{% url 'client_office-detail' order.pk %}"><h3>{{ order.pk }}</h3></a>
+        {% endfor %}
+    </div>
+{% endblock %}
+

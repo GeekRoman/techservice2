@@ -1,0 +1,24 @@
+{% extends "mainApp/wrapper.html" %} {% block content %}
+<div class="text-container-center">
+    <div class="wrap">
+        <h2 class="area-text-primary">{{area.name}} </h2>
+        <h4 class="area-text-description">{{area.description|safe|linebreaks}} </h4>
+        <hr>
+        <div class="area-container">
+            {% for service in area.service_set.all %}
+            <div class="area-link-item">
+                <a class="area-link" href="{% url 'service-detail' service.pk %}">{{ service.name }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% for i in user.groups.values_list %} {% if "ServiceMaster" in i %}
+        <div class="area-categories">
+            <hr>
+            <div class="crud-item"><a class="area-link-crud" href="{% url 'area-create' %}">Добавить категорию</a></div>
+            <div class="crud-item"><a class="area-link-crud" href="{% url 'area-update' area.pk %}">Редактировать категорию</a></div>
+            <div class="crud-item"><a class="area-link-crud" href="{% url 'area-delete' area.pk %}">Удалить категорию</a></div>
+        </div>
+        {% endif %} {% endfor %}
+    </div>
+</div>
+{% endblock %}

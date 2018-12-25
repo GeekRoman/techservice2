@@ -1,0 +1,17 @@
+{% extends "mainApp/wrapper.html" %} {% block content %}
+<div class="text-container-center">
+    <h1 class="area-text-primary">РЕМОНТ {{service.name}}</h1>
+    <h5 class="area-text-description">{{service.description}}</h5>
+    <div class="time-price">
+        <h5>Время выполнения: {{service.time}}</h5>
+        <h5>Стоимость: {{service.price}}</h5>
+    </div>
+    <hr>
+    <div class="area-button">
+        <a href="{% url 'areas-detail' service.area.id %}" class="btn btn-primary">Вернуться к категории</a>
+    </div>
+    <div class="area-button">
+        <a href="{% url 'make_order' service.pk %}" class="btn btn-primary">Оформить заказ</a>
+    </div>
+</div>
+{% endblock %}

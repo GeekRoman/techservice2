@@ -1,0 +1,20 @@
+{% extends "mainApp/wrapper.html" %} {% block content %}
+<div class="text-container-center">
+    <div class="wrap">
+        <h2 class="area-text-primary">{{master.user.last_name}} {{master.user.first_name}} </h2>
+        <h2 class="area-text-primary">{{master.phone}} </h2>
+        <hr>
+        <div class="area-container">
+            <!-- <img src={{master.photo.url}} alt="Area image" /> -->
+            {% for area in master.areas.all %}
+            <div class="area-link-item">
+                <a class="area-link" href="{% url 'areas-detail' area.pk %}">{{ area.name }}</a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+<img src={{master.photo.url}} alt="Area image" />

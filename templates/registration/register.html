@@ -1,0 +1,34 @@
+{% extends "mainApp/wrapper.html" %} {% block content %}
+<div class="text-container-center">
+    <form class="form-con" action="/register/" method="POST">
+        {% csrf_token %}
+        <div class="fieldWrapper">
+            <div class="input"><label>Логин</label><span class="form-edit-box">{{ form.username }}</span></div>
+            <div class="error">{{ form.username.errors }}</div>
+        </div>
+        <div class="fieldWrapper">
+            <div class="input"><label>E-mail</label><span class="form-edit-box">{{ form.email }}</span></div>
+            <div class="error">{{ form.email.errors }}</div>
+        </div>
+        <div class="fieldWrapper">
+            <div class="input"><label>Имя</label><span class="form-edit-box">{{ form.first_name }}</span></div>
+            <div class="error">{{ form.first_name.errors }}</div>
+        </div>
+        <div class="fieldWrapper">
+            <div class="input"><label>Фамилия</label><span class="form-edit-box">{{ form.last_name }}</span></div>
+            <div class="error">{{ form.last_name.errors }}</div>
+        </div>
+        <div class="fieldWrapper">
+            <div class="input"><label>Пароль</label><span class="form-edit-box">{{ form.password1 }}</span></div>
+            <div class="error">{{ form.password1.errors }}</div>
+        </div>
+        <div class="fieldWrapper">
+            <div class="input">
+                <label>Подтвердите пароль</label><span class="form-edit-box">{{ form.password2 }}</span>
+            </div>
+            <div class="error">{{ form.password2.errors }}</div>
+        </div>
+        <div class="register-button-container"><button id="register-button" type="submit">Зарегистрироваться</button></div>
+    </form>
+</div>
+{% endblock %}

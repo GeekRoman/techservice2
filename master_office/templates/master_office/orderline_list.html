@@ -1,0 +1,37 @@
+{% extends "master_office/master_wrapper.html" %}
+
+{% block master_content %}
+    <div class="order">{% if page == 'closed' %}
+            <h2 class="area-text-primary">Выполненные заказы</h2>
+        {% elif page == 'all_orderlines' %}
+            <h2 class="area-text-primary">Все заказы</h2>
+        {% elif page == 'masters_orderlines' %}
+            <h2 class="area-text-primary">Заказы для выполнения</h2>
+        {% endif %}
+    
+        {% if many_orders %}
+            {{ many_orders }}
+    
+        {% endif %}
+    
+        {% if orderlines.is_empty %}
+            <h2 class="area-text-primary">Нет заказов!</h2>
+        {% else %}
+            {% for line in orderlines %}
+                <hr>
+                <p>ID: {{ line.id }}</p>
+    
+                <p>status: {{ line.status }}</p>
+                <p>цена: {{ line.price }}</p>
+                <p>услуга: {{ line.service.name }}
+                <a href="{% url 'master_orders-detail' line.order.pk %}"><h3> Показать весь заказ </h3></a>
+                {% if page == 'all_orderlines' %}
+                    <a href="{% url 'take_order' line.pk %}"><h3> Взяться за заказ </h3></a>
+                {% endif %}
+                {% if page == 'masters_orderlines' %}
+                    <a href="{% url 'close_order' line.pk %}"><h3> Закрыть заказ </h3></a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}</div>
+{% endblock %}
+

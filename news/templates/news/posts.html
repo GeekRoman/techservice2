@@ -1,0 +1,22 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+
+    {% if articles_list %}
+        <ul>
+
+          {% for article in articles_list %}
+          <li>
+            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a> ({{ articles.date|date:'Y-m-d в H:i:s' }})
+          </li>
+          {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>There are no books in the library.</p>
+    {% endif %}
+    <!-- <h2 class="text-info">{{articles.title}} </h2>
+    <h6 class="text-info">Опубликовано: {{articles.date|date:'Y-m-d в H:i:s'}} </h6>
+    <p>{{articles.post|safe|linebreaks}}</p> -->
+
+{% endblock %}

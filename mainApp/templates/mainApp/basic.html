@@ -1,0 +1,38 @@
+{% extends "mainApp/wrapper.html" %} {% load static %} {% block content %}
+<script type="text/javascript">
+ymaps.ready(init);
+        var myMap, 
+            myPlacemark;
+
+        function init(){ 
+            myMap = new ymaps.Map("map", {
+                center: [53.91793482, 27.59475116],
+                zoom: 14
+            }); 
+            
+            myPlacemark = new ymaps.Placemark([53.91793482, 27.59475116], {
+                hintContent: 'Tech Service',
+                balloonContent: 'Лучший сервис в мире'
+            });
+            
+            myMap.geoObjects.add(myPlacemark);
+        }
+</script>
+</div>
+ 
+<div class="text-container-center"><div id="map"></div>
+<div class="way" >
+     <h1>ПРИГЛАШАЕМ ПОСЕТИТЬ НАШ ФИРМЕННЫЙ МАГАЗИН И ЦЕНТР СЕРВИСНОГО ОБСЛУЖИВАНИЯ ПО АДРЕСУ:</h1>
+     <br>
+     <p> Г. МИНСК, УЛ. ПЕТРУСЯ БРОВКИ, 6. (выход из метро в сторону Комаровского рынка; рядом с нами торговый центр Импульс и магазин Fashion Outlet)</p>
+     <br>
+     <h1>CПРАВОЧНАЯ СЛУЖБА СЕРВИСНОГО ЦЕНТРА</h1>
+    <p>
+        <span>8 029 212 89 66</span>
+        <br>
+        <span>8 025 900 09 09</span>
+        <br>
+        <span>8 029 334 09 09</span>
+    </p>
+</div>
+{% endblock %}

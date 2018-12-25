@@ -1,0 +1,15 @@
+{% extends "mainApp/wrapper.html" %}
+
+{% block content %}
+
+    <div class="menu-buttons">
+     	<a href="{% url 'master_page' user.pk %}">Кабинет мастера</a>
+    	<a href="{% url 'masters_orders' %}">Заказы для выполнения</a>
+    	<a href="{% url 'orderlines' %}">Новые заказы</a>
+   		<a href="{% url 'masters_closed_orders' %}">Выполненные заказы</a>
+    </div>
+<hr class="hr-green">
+
+    {% block master_content %} {% endblock %}
+
+{% endblock %}

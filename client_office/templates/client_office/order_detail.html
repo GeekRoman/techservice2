@@ -1,0 +1,53 @@
+{% extends "client_office/client_wrapper.html" %}
+
+{% block client_content %}
+<div class="order">
+    {% if ready %}
+            <div class="order-ready">
+                <h4>{{ ready }}</h4>
+            </div>
+    {% endif %}
+    
+    Информация о заказе:
+    <p>Статус заказа: {{ order.status }}</p>
+    <p>Клиент: {{ order.client.first_name }}</p>
+    <p>Цена: {{ order.price }}</p>
+    <p>Обратная связь: {{ order.feedback }}</p>
+    <hr>
+    {% for line in order.orderline_set.all %}
+        <p>Название услуги: {{ line.service.name }}</p>
+        <p>Описание проблемы: {{ line.touble_description }}</p>
+        <p>brand: {{ line.brand_name }}</p>
+        <hr>
+    {% endfor %}
+
+    {% if fb_form != Null %}
+        <p>Оцените заказ!</p>
+        <form action="{% url 'add_feedback' order.id %} " method="post">
+
+    <h4>Ваша текущая оценка: {{ order.rating }} </h4>
+    <h4>Ваш текущий отзыв: {{ order.feedback }}</h4>
+            {% csrf_token %}
+            {{ fb_form.as_p }}
+            <button class="button" type="submit">Оценить</button>
+        </form>
+    {% endif %}
+
+
+    <p>Комментарии:</p>
+    {% if form != Null %}
+
+        <form action="{% url 'addcomment' order.id %} " method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button" type="submit">Добавить комментарий</button>
+        </form>
+    {% endif %}
+    {% for comment in order.comment_set.all %}
+        <hr>
+        <p>Текст комментария: {{ comment.author.username }}</p>
+        <p>Автор комментария: {{ comment.content }}</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

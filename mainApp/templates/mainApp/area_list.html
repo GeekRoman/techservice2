@@ -1,0 +1,18 @@
+{% extends "mainApp/wrapper.html" %} {% load static %} {% block content %} {% for area in object_list %}
+<div class="area-item">
+    <a href="{% url 'areas-detail' area.pk %}">
+        <div class="portfolio web" data-cat="web">
+            <div class="portfolio-wrapper">
+                <div class="portfolio-img"><img src={{area.photo.url}} alt="Area image" /></div>
+                <div class="label">
+                    <div class="label-text">
+                        <p class="text-title">{{ area.name }}</p>
+                        <span class="text-category">{{ area.description }}</span>
+                    </div>
+                    <div class="label-bg"></div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+{% endfor %} {% endblock %}

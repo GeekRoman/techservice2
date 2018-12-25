@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Tech Service</title>
+    {% load static %}
+    <link rel="icon" href="static/images/heart.png" type="image/x-icon">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css?family=Gaegu" rel="stylesheet">
+    <link rel='stylesheet' href="{% static 'css/style.css' %}" type='text/css'>
+    <!--  jquery plguin -->
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- start gallery -->
+    <script type="text/javascript" src="{% static 'js/headhesive.min.js' %}"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            var header = new Headhesive('.header');
+            var filterList = {
+
+                init: function () {
+
+                    // MixItUp plugin
+                    // http://mixitup.io
+                    $('#portfoliolist').mixitup({
+                        targetSelector: '.portfolio',
+                        filterSelector: '.filter',
+                        effects: ['fade'],
+                        easing: 'snap',
+                        // call the hover effect
+                        onMixEnd: filterList.hoverEffect()
+                    });
+
+                },
+
+                hoverEffect: function () {
+                    // Simple parallax effect
+                    $('#portfoliolist .portfolio').hover(
+                        function () {
+                            $(this).find('.label').stop().animate({bottom: 0}, 200, 'easeOutQuad');
+                            $(this).find('img').stop().animate({top: -30}, 500, 'easeOutQuad');
+                        },
+                        function () {
+                            $(this).find('.label').stop().animate({bottom: -40}, 200, 'easeInQuad');
+                            $(this).find('img').stop().animate({top: 0}, 300, 'easeOutQuad');
+                        }
+                    );
+                }
+            };
+
+            // Run the show!
+            filterList.init();
+
+        });
+    </script>
+    <!-- Add fancyBox main JS and CSS files -->
+</head>
+
+<body>
+<!-- start header -->
+<div class="header_bg">
+    <div>
+        <div class="header">
+            <div class="logo">
+                <h1 id="logo"><a class="link" href="{% url 'index' %}">Tech Service</a></h1>
+            </div>
+            <div class="h_right">
+                <ul class="menu">
+                    <li class="menu-item"><a href="{% url 'areas' %}">Категории</a></li>
+                    <li class="menu-item"><a href="{% url 'masters' %}">Мастера</a></li>
+                    <li class="menu-item"><a href="/contact">Контакты</a></li>
+                    <li class="menu-item"><a href="{% url 'last_feedback' %}">Oтзывы</a></li>
+
+                    {% if user.groups.values_list|length == 0 and user.is_authenticated  %}
+                        <li class="menu-item"><a href="{% url  'client_page' %}">Кабинет пользователя</a></li>
+                    {% endif %}
+
+                    {% for i in user.groups.values_list %}
+                        {% if "ServiceAdmin" in i %}
+                            <li class="menu-item"><a href="/admin">Админ</a></li>
+                        {% elif "ServiceMaster" in i %}
+                            <li class="menu-item"><a href="{% url 'master_page' user.pk %}">Кабинет мастера</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if user.is_authenticated %}
+                        <li class="non-clickable">Вы вошли как: {{ user.get_username }}</li>
+                        <li class="menu-item logout"><a href="{% url 'logout' %}?next=/">Выйти</a></li>
+                    {% else %}
+                        <li class="menu-item">
+                            <a href="{% url 'login' %}">
+                                Войти</a>
+                        </li>
+                        <li class="menu-item"><a
+                                href="{% url 'register' %}?next={{ request.path }}">Зарегистрироваться</a></li>
+                    {% endif %}
+                </ul>
+                <script type="text/javascript" src="{% static 'js/responsive.menu.js' %}"></script>
+                <!-- end smart_nav * -->
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<!-- start main -->
+<div id="main">
+    {% block content %} {% endblock %}
+</div>
+<!-- footer -->
+    <div class="footer_bg">
+        <div class="footer">
+            <div class="wrap">
+                <div class="span_of_4">
+                    <div class="span1_of_4">
+                        <h4>о нас</h4>
+
+                        <p>Наша компании «TECH SERVICE» оказывает услуги по настройке и ремонту любого вида техники в
+                            Минске и в Минской области.</p>
+                        <span>Адрес</span>
+                        <p class="top">ул. Петруся Бровки 6,</p>
+                        <p>БГУИР Корпус №1</p>
+                        <p>г. Минск</p>
+                        <p>Phone:(29) 212 89 66</p>
+                        <p>E-mail: roman311297@gmail.ru</p>
+                        <div class="f_icons">
+                            <ul>
+                                <li><a class="icon2" href="https://twitter.com/ebsuir"></a></li>
+                                <li><a class="icon1" href="https://www.facebook.com/"></a></li>
+                                <li><a class="icon3" href="https://mail.google.com/mail/u/0/#inbox"></a></li>
+                                <li><a class="icon4" href="https://github.com/justmad1/techService"></a></li>
+                                <li><a class="icon5" href="http://127.0.0.1:8000"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="span1_of_4">
+                        <h4>Поддержка</h4>
+                        <ul>
+                            <li>
+                                <a href="{% url 'statistics' %}"><span>Статистика</span></a>
+                            </li>
+                            <li>
+                                <a href="https://tech.onliner.by/tag/it-belarus"><span>Главные новости</span></a>
+                            </li>
+                            <li>
+                                <a href="/areas"><span>Оформить услугу</span></a>
+                            </li>
+                            <li>
+                                <a href="/contact"><span>Наш сервис</span></a>
+                            </li>
+                            <li>
+                                <a href="https://www.google.by/search?biw=1707&bih=816&tbm=isch&sa=1&ei=R5H6WrVJxpeyAYqkjoAL&q=atari+breakout+&oq=atari+breakout+&gs_l=img.3..0l10.5251.5694.0.6853.3.3.0.0.0.0.283.626.0j2j1.3.0....0...1.1.64.img..0.1.283....0.oLbYA-7FqGY"><span>Скоротать время</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="span1_of_4">
+                        <h4>Наши достижения и победы</h4>
+                        <ul>
+                            <li>
+                                <a href="http://atrsib.ru/index.php/konkursy/pobediteli-konkursov/nominatsiya-luchshij-biznes-proekt">
+                                    <span>Номинация «Лучший бизнес-проект» 2000</span></a></li>
+                            <li>
+                                <a href="http://www.economy.gov.by/ru/mal-biznes-ru/">
+                                    <span>Приз «За вклад в развитие малого и среднего бизнеса Республики Беларусь»</span></a>
+                            </li>
+                            <li>
+                                <a href="https://economy.gov.by/ru/finmsbfond-ru/">
+                                    <span>Приз «За личный вклад в поддержку и развитие малого и среднего предпринимательства»</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
