@@ -127,3 +127,4 @@ CART_SESSION_ID = 'cart'
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+ALLOWED_HOSTS = ['desolate-oasis-71960.herokuapp.com']
